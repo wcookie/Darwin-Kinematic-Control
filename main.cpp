@@ -1,6 +1,5 @@
 //websocket
 #include "easywsclient.hpp" // <-- include only if you don't want compile separately
-//#include "easywsclient.cpp"
 #ifdef _WIN32
 #pragma comment( lib, "ws2_32" )
 #include <WinSock2.h>
@@ -9,11 +8,8 @@
 #include <stdio.h>
 #include <string>
 #include "Walk.hpp"
-//webots
-#include "walk-client.h"
 #include <cstdlib>
 #include <vector>
-#include "webots-client.h"
 
 
 //using namespace webots;
