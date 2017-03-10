@@ -13,7 +13,6 @@
 
 
 //using namespace webots;
-
 static easywsclient::WebSocket::pointer ws = NULL;
 
 // "WALK 5.8 30.0"
@@ -73,9 +72,11 @@ void handle_message(const std::string & message)
 
 
 
-int main()
+int main(int argc, char **argv)
 {
-
+    Walk *controller = new Walk();
+    controller->run();
+    delete
 #ifdef _WIN32
     INT rc; 
     WSADATA wsaData;
@@ -100,5 +101,6 @@ int main()
 #ifdef _WIN32
     WSACleanup();
 #endif
-    return 0;
+    delete controller;
+    return EXIT_FAILURE;
 }
