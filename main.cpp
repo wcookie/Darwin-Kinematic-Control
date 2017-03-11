@@ -14,6 +14,7 @@
 
 //using namespace webots;
 static easywsclient::WebSocket::pointer ws = NULL;
+webots::Walk *controller = new Walk();
 
 // "WALK 5.8 30.0"
 // walk --> Walk(5,8 30.0);
@@ -36,7 +37,7 @@ void handle_walk(const std::string & r){
             speed = stod(c2);
             r2 = r.substr(curr2 + 1, r.length());
             angle = stod(r2);
-            move(speed, angle);
+            controller->move(speed, angle);
             break;
         }
     }
@@ -62,7 +63,7 @@ void handle_message(const std::string & message)
                 handle_walk(r);
                 break;
             }else if (c == "STOPWALK"){
-                stopMov();
+                controller->stopMov();
                 ws->close();
                 break;
             }
@@ -74,12 +75,10 @@ void handle_message(const std::string & message)
 
 int main(int argc, char **argv)
 {
-    Walk *controller = new Walk();
     controller->run();
-    delete
 #ifdef _WIN32
-    INT rc; 
-    WSADATA wsaData;
+    easywsclient::INT rc; 
+    easywsclient::WSADATA wsaData;
 
     rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (rc) {
