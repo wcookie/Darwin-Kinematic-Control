@@ -10,7 +10,7 @@ RESOURCES_PATH = $(WEBOTS_HOME)/projects/robots/robotis
 INCLUDE = -I"$(RESOURCES_PATH)/libraries/managers/include" -I"$(RESOURCES_PATH)/libraries/robotis-op2/robotis/Framework/include"
 LIBRARIES = -L"$(RESOURCES_PATH)/libraries/robotis-op2" -lrobotis-op2 -L"$(RESOURCES_PATH)/libraries/managers" -lmanagers
 CXX_SOURCES = $(wildcard *.cpp)
-easywsclient.o: easywsclient.cpp easywsclient.hpp
+# easywsclient.o: easywsclient.cpp easywsclient.hpp
 
 ### Do not modify: this includes Webots global Makefile.include
 include $(WEBOTS_HOME_PATH)/resources/Makefile.include
