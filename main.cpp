@@ -14,7 +14,7 @@
 
 //using namespace webots;
 static easywsclient::WebSocket::pointer ws = NULL;
-webots::Walk *controller = new Walk();
+static Walk *controller = new Walk();
 
 // "WALK 5.8 30.0"
 // walk --> Walk(5,8 30.0);
@@ -77,8 +77,8 @@ int main(int argc, char **argv)
 {
     controller->run();
 #ifdef _WIN32
-    easywsclient::INT rc; 
-    easywsclient::WSADATA wsaData;
+    int rc; 
+    WSADATA wsaData;
 
     rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (rc) {
