@@ -74,6 +74,7 @@ void handle_message(const std::string & message)
 
 int main(int argc, char **argv)
 {
+        inasdjflkh;
     Walk *controller = new Walk();
     controller->run();
     delete
