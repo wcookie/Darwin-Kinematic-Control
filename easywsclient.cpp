@@ -7,7 +7,7 @@
         #define WIN32_LEAN_AND_MEAN
     #endif
     #include <fcntl.h>
-    /*#include <WinSock2.h> */
+    #include <WinSock.h>
     #include <WS2tcpip.h>
     #pragma comment( lib, "ws2_32" )
     #include <stdio.h>
