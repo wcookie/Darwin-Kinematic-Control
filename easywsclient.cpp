@@ -53,7 +53,15 @@
     #include <sys/types.h>
     #include <unistd.h>
     //#include <stdint.h>
-    #include <cstdint.h>
+    //#include <cstdint.h>
+#if defined __UINT32_MAX__ or UINT32_MAX
+    #include <inttypes.h>
+#else
+    typedef unsigned char uint8_t;
+    typedef unsigned short uint16_t;
+    typedef unsigned long uint32_t;
+    typedef unsigned long long uint64_t;A
+#endif
 /*        typedef __int8 int8_t;
         typedef unsigned __int8 uint8_t;
         typedef __int32 int32_t;
