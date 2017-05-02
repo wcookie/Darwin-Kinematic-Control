@@ -62,16 +62,9 @@
     //typedef unsigned long uint32_t;
     typedef unsigned long long uint64_t;A
 #endif
-/*        typedef __int8 int8_t;
-        typedef unsigned __int8 uint8_t;
-        typedef __int32 int32_t;
-        typedef unsigned __int32 uint32_t;
-        typedef __int64 int64_t;
-        typedef unsigned __int64 uint64_t;
- */   
     #ifndef _SOCKET_T_DEFINED
-        typedef int socket_t;
-        #define _SOCKET_T_DEFINED
+     typedef int socket_t;
+     #define _SOCKET_T_DEFINED
     #endif
     #ifndef INVALID_SOCKET
         #define INVALID_SOCKET (-1)
