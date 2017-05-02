@@ -10,7 +10,7 @@
 #include "Walk.hpp"
 #include <cstdlib>
 #include <vector>
-
+#include <iostream>
 
 //using namespace webots;
 static easywsclient::WebSocket::pointer ws = NULL;
@@ -34,9 +34,9 @@ void handle_walk(const std::string & r){
             c2 += r[curr2];
             curr2++;
         } else{
-            speed = stod(c2);
+            speed = std::stod(c2);
             r2 = r.substr(curr2 + 1, r.length());
-            angle = stod(r2);
+            angle = std::stod(r2);
             controller->move(speed, angle);
             break;
         }
