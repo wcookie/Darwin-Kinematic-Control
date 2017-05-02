@@ -11,6 +11,9 @@
 #include <cstdlib>
 #include <vector>
 #include <iostream>
+#include <sstream>
+
+
 
 //using namespace webots;
 static easywsclient::WebSocket::pointer ws = NULL;
@@ -29,16 +32,22 @@ void handle_walk(const std::string & r){
     double speed = 0.0;
     double angle = 0.0;
     std::string r2; 
+    std::stringstream ss;
     while (curr2 < r.length()){
         if (r[curr2] != ' '){
             c2 += r[curr2];
             curr2++;
         } else{
             //speed = std::stod(c2);
-            speed = std::atoi(c2);
+            //speed = std::atoi(c2);
+            ss <<c2;
+            ss >>speed;
+            ss.clear();
             r2 = r.substr(curr2 + 1, r.length());
             //angle = std::stod(r2);
-            angle = std::atoi(r2);
+            //angle = std::atoi(r2);
+            ss << r2;
+            ss >> angle;
             controller->move(speed, angle);
             break;
         }
