@@ -12,7 +12,14 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
-
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <cstdlib>
+#include <string.h>
+#include <unistd.h>
 
 
 //using namespace webots;
@@ -25,13 +32,18 @@ static Walk *controller = new Walk();
 // stopWalking();
 
 
+void error(char *msg)
+{
+    perror(msg);
+    exit(0);
+}
 
 void handle_walk(const std::string & r){
     size_t curr2 = 0;
     std::string c2 = ""; // the current message in this loop
     double speed = 0.0;
     double angle = 0.0;
-    std::string r2; 
+    std::string r2;
     std::stringstream ss;
     while (curr2 < r.length()){
         if (r[curr2] != ' '){
@@ -88,26 +100,52 @@ int main(int argc, char **argv)
 {
     controller->run();
 #ifdef _WIN32
-    int rc; 
+    int rc;
     WSADATA wsaData;
 
     rc = WSAStartup(MAKEWORD(2, 2), &wsaData);
     if (rc) {
         printf("WSAStartup Failed.\n");
         return 1;
-    }   
+    }
 #endif
 
-    ws = easywsclient::WebSocket::from_url("ws://localhost:8126/foo");
-    assert(ws);
+int sockfd, portno, n;
 
-    ws->send("hello");
+struct sockaddr_in serv_addr;
+struct hostent *server;
 
-    while (ws->getReadyState() != easywsclient::WebSocket::CLOSED) {
-        ws->poll();
-        ws->dispatch(handle_message);
-    }   
-    delete ws; 
+char buffer[256];
+
+portno = 80;
+sockfd = socket(AF_INET, SOCK_STREAM, 0);
+if (sockfd < 0)
+    error("ERROR opening socket");
+server = gethostbyname("10.105.183.32");
+if (server == NULL) {
+    fprintf(stderr,"ERROR, no such host\n");
+    exit(0);
+}
+bzero((char *) &serv_addr, sizeof(serv_addr));
+serv_addr.sin_family = AF_INET;
+bcopy((char *)server->h_addr,
+     (char *)&serv_addr.sin_addr.s_addr,
+     server->h_length);
+serv_addr.sin_port = htons(portno);
+if(connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) >= 0)
+{
+  while(true){
+    bzero(buffer,256);
+    n = read(sockfd,buffer,255);
+    if (n < 0)
+         error("ERROR reading from socket");
+    printf("%s\n",buffer);
+    if (buffer[0] == '*'){
+      printf("exit \r\n");
+      break;
+    }
+}
+}
 #ifdef _WIN32
     WSACleanup();
 #endif
